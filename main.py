@@ -10,7 +10,7 @@ def PutText(index, pt1):
     cv2.putText(rgb, "line-" + str(index), pt1, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2)
 
 # Read the image
-file = "sample-1.jpg"
+file = "10100.jpg"
 img = cv2.imread(file)
 rgb2 = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -87,7 +87,8 @@ colors = [
     ("navy", (0, 0, 128)),
     ("blue", (0, 0, 255)),
     ("teal", (0, 128, 128)),
-    ("aqua", (0, 255, 255))
+    ("aqua", (0, 255, 255)),
+    ("test", (183, 135, 84))
 ]
 
 def distance(a,b):
@@ -139,8 +140,8 @@ for line in lines:
         index = index + 1
         continue
 
-    pick_color = "white"
-    number_of_pix = 2
+    pick_color = "test"
+    number_of_pix = 1
 
     # Original point
     if (findclosest(pix[pt1[0], pt1[1]]) == pick_color or findclosest(pix[pt2[0], pt2[1]]) == pick_color):
