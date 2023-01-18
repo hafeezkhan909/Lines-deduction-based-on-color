@@ -96,7 +96,12 @@ def distance(a,b):
     dy = a[1]-b[1]
     dz = a[2]-b[2]
     return math.sqrt(dx*dx+dy*dy+dz*dz)
-
+'''
+This function is taking two arguments a and b, which are tuples representing the RGB values of two pixels. It calculates the Euclidean distance between the two pixels.
+It first calculates the difference in the red, green, and blue values of the two pixels, which are represents by 'dx', 'dy', 'dz'.
+Then it calculates the square of the differences and adds them together.
+Finally, square root of it is taken.
+'''
 def findclosest(pixel):
     mn = 999999
     for name, rgb in colors:
@@ -105,7 +110,13 @@ def findclosest(pixel):
             mn = d
             color = name
     return color
-
+'''
+The findclosest() function is taking one argument 'pixel', which is a tuple representing the RGB values of a pixel. The function finds the closest color to the pixel in the 'colors' list.
+It first initializes a variable 'mn' with a large value.
+It then loops over the 'colors' list, for each color it calculates the Euclidean distance between the 'pixel' and the color using the distance() function.
+If this distance is less than the current minimum distance, it updates the minimum distance and the closest color.
+Finally, it returns the name of the closest color.
+'''
 
 contours, z = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 width, height = im.size
@@ -136,7 +147,7 @@ for line in lines:
     pt2 = (line[0][2], line[0][3])
     all_lines.append([index, pt1[0], pt1[1], pt2[0], pt2[1]])
 '''
-This for loop is iterating over the lines detected in the image, whcih are stored in the variable lines. For each line, it first extracts the starting and ending point of the line 
+This for loop is iterating over the lines detected in the image, which are stored in the variable lines. For each line, it first extracts the starting and ending point of the line 
 and stores them in the variable pt1 and pt2 respectively. It then adds the line to a list of all lines with the line index, and coordinates of the starting and ending point of the line.
 '''
     if pt1[1] < height/2 or pt2[1] < height/2:
@@ -156,15 +167,21 @@ considering the upper half of the image and not processing them further.
         colored_lines.append([index, pt1[0], pt1[1], pt2[0], pt2[1]])
         PutText(index, pt1)
 '''
-If either the staring or ending point of the line is the specified color, it will draw the line on the image in red color and add the line details 
+If either the staring or ending point of the line is the specified color, it will draw the line on the image in red color and add the line details to the colored_lines list with the line
+index and call PutText function to add the text the image
 '''
-
-
-
 
     elif(pt1[0] + number_of_pix < width and pt1[1] + number_of_pix < height) and (pt2[0] + number_of_pix < width and pt2[1] + number_of_pix < height):
         for x in range(1, number_of_pix+1):
 
+'''
+The above elif statement checks whether the starting and ending points of the line lie within the boundaries of the image when a number of (specified) pixels are added to the x and y 
+coordinates of each point.
+
+It then enters a for loop where it iterates through the range of 1 to the value of number_of_pix+1. It checks for 8 different positions relative to the starting and ending point of the 
+line, each one check is performed using the findclosest() function to compare the color of the pixel at that position to the value of pick_color. If any of these conditions are met, it 
+will draw the line in red and append the line's information to the colored_lines list. The loop will then break out of the for loop and proceed to the next line.
+'''
             # Upper left
             if (findclosest(pix[pt1[0]-x, pt1[1]-x]) == pick_color or findclosest(pix[pt2[0]-x, pt2[1]-x]) == pick_color):
                 cv2.line(rgb, pt1, pt2, (0, 0, 255), 2)
@@ -243,6 +260,17 @@ If either the staring or ending point of the line is the specified color, it wil
 
     index = index + 1
 
+'''
+Once it is determined that the starting or ending point does not consist of the specified color, it consequently enters the nested loop that iterates over the range of 1 to 
+number_of_pix+1. For each iteration, it checks whether any of the 8 neighboring pixels of starting and ending point of the line has the specified color with the help of findclosest()
+function. The 8 pixels as mentioned above are: upper left, upper middle, upper right, left, right, lower left, lower middle, and lower right. Hence, if any of the neighboring pixels has
+the specified color, it draws the line on the image.
+
+In summary, initially the elif statement in the block of code is checking that the point of the line is not going out of the boundary of the image by adding number of pixels to the point 
+and checking if it is still within the image or not. And then it checks in a grid of 3x3 around the point if it contains the color that is needed or not. If it finds it, it colors the
+line in red and saves the information of the line, otherwise it continues to the next line.
+'''
+
 
 # Writing the output text file
 with open('all-lines.txt', 'w') as f:
@@ -258,4 +286,3 @@ with open('colored-lines.txt', 'w') as f:
 plt.title(pick_color+ " Lines" + " " + "("+str(number_of_pix)+") Pixel")
 plt.imshow(rgb)
 plt.show()
-
