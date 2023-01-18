@@ -130,16 +130,23 @@ index = 0
 all_lines = []
 colored_lines = []
 
-# Filitering the lines based on color and surrounding pixels
+# Filtering the lines based on color and surrounding pixels
 for line in lines:
     pt1 = (line[0][0], line[0][1])
     pt2 = (line[0][2], line[0][3])
     all_lines.append([index, pt1[0], pt1[1], pt2[0], pt2[1]])
-
+'''
+This for loop is iterating over the lines detected in the image, whcih are stored in the variable lines. For each line, it first extracts the starting and ending point of the line 
+and stores them in the variable pt1 and pt2 respectively. It then adds the line to a list of all lines with the line index, and coordinates of the starting and ending point of the line.
+'''
     if pt1[1] < height/2 or pt2[1] < height/2:
         index = index + 1
         continue
-
+'''
+The if statement is checking whether either of the y-coordinate of the starting or the ending point is lying in the upper half of the image (by dividing the height by 2). If the line 
+lies in the upper half of the image, it increments the index by 1 and skips that line (moving on to the next iteration in the for loop). Therefore this part of the code is not 
+considering the upper half of the image and not processing them further. 
+'''
     pick_color = "test"
     number_of_pix = 1
 
@@ -162,8 +169,6 @@ for line in lines:
                 colored_lines.append([index, pt1[0], pt1[1], pt2[0], pt2[1]])
                 PutText(index, pt1)
                 break
-
-
 
 
 
