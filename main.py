@@ -147,15 +147,17 @@ The if statement is checking whether either of the y-coordinate of the starting 
 lies in the upper half of the image, it increments the index by 1 and skips that line (moving on to the next iteration in the for loop). Therefore this part of the code is not 
 considering the upper half of the image and not processing them further. 
 '''
-    pick_color = "test"
-    number_of_pix = 1
+    pick_color = "test" #The variable pick_color is being used to specify the color that the code is looking for (In this case it is set to white)
+    number_of_pix = 1 #The variable number_of_pix is being used to specify the no. of pixels around staring and ending point of the line that should be checked for the specified color.
 
     # Original point
     if (findclosest(pix[pt1[0], pt1[1]]) == pick_color or findclosest(pix[pt2[0], pt2[1]]) == pick_color):
         cv2.line(rgb, pt1, pt2, (0, 0, 255), 2)
         colored_lines.append([index, pt1[0], pt1[1], pt2[0], pt2[1]])
         PutText(index, pt1)
-
+'''
+If either the staring or ending point of the line is the specified color, it will draw the line on the image in red color and add the line details 
+'''
 
 
 
